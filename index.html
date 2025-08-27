@@ -89,6 +89,16 @@
       display: flex;
       min-height: 100vh;
     }
+    .menu-icon {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 2em;
+      color: #ff0000;
+      cursor: pointer;
+      z-index: 100;
+      text-shadow: 0 0 8px #ff0000;
+    }
     .sidebar {
       width: 300px;
       background: #1a1a1a;
@@ -99,6 +109,12 @@
       scrollbar-width: thin;
       scrollbar-color: #ff0000 #1a1a1a;
       box-shadow: 3px 0 12px rgba(255, 0, 0, 0.4);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+      z-index: 99;
+    }
+    .sidebar.active {
+      transform: translateX(0);
     }
     .sidebar h3 {
       color: #ff0000;
@@ -130,9 +146,53 @@
       background: none;
     }
     .main-content {
-      margin-left: 320px;
       padding: 30px;
-      width: calc(100% - 320px);
+      width: 100%;
+    }
+    .user-info {
+      position: fixed;
+      top: 20px;
+      left: 60px;
+      color: #ff0000;
+      font-size: 1.2em;
+      text-shadow: 0 0 8px #ff0000;
+      z-index: 100;
+    }
+    .account-section {
+      background: #1a1a1a;
+      padding: 25px;
+      border-radius: 12px;
+      margin: 30px auto;
+      max-width: 700px;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(255, 0, 0, 0.4);
+      display: none;
+    }
+    .account-section input {
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      background: #2a2a2a;
+      color: #ffcccc;
+      font-size: 1.1em;
+      width: 100%;
+      max-width: 300px;
+    }
+    .account-section button {
+      background: linear-gradient(to right, #ff0000, #cc0000);
+      color: #fff;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1em;
+      transition: background 0.3s, transform 0.3s;
+      margin: 10px 0;
+    }
+    .account-section button:hover {
+      background: linear-gradient(to right, #cc0000, #ff0000);
+      transform: scale(1.05);
     }
     .header {
       background: #1a1a1a;
@@ -258,6 +318,18 @@
       font-size: 1.2em;
       margin: 15px 0;
     }
+    .confirmed-badge {
+      display: inline-block;
+      background: linear _
+
+gradient(to right, #ffd700, #ccac00);
+      color: #000;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.9em;
+      margin-left: 10px;
+      text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    }
     .item .comment {
       font-style: italic;
       color: #ffcccc;
@@ -294,6 +366,35 @@
       background: #2a2a2a;
       border-radius: 6px;
     }
+    .comment-input {
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      background: #2a2a2a;
+      color: #ffcccc;
+      font-size: 1em;
+      width: 100%;
+    }
+    .comment-btn {
+      background: linear-gradient(to right, #ff0000, #cc0000);
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1em;
+      margin: 10px 0;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .comment-btn:hover {
+      background: linear-gradient(to right, #cc0000, #ff0000);
+      transform: scale(1.05);
+    }
+    .comment-btn:disabled {
+      background: #666;
+      cursor: not-allowed;
+    }
     .buy-btn {
       background: linear-gradient(to right, #ff0000, #cc0000);
       color: #fff;
@@ -315,202 +416,82 @@
     }
     .job-section {
       background: #1a1a1a;
-      padding: 25px;
-      border-radius: 12px;
-      margin: 30px auto;
-      max-width: 700px;
-      text-align: center;
-      box-shadow: 0 6px 18px rgba(255, 0, 0, 0.4);
+      padding:  menuData = [
+      { name: 'Credit Cards', id: 'cards', container: 'cardContainer' },
+      { name: 'Store Accounts', id: 'accounts', container: 'accountContainer' },
+      { name: 'Malware', id: 'malware', container: 'malwareContainer' },
+      { name: 'Fullz', id: 'fullz', container: 'fullzContainer' }
+    ];
+
+    function toggleMenu() {
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('active');
     }
-    .job-section a {
-      color: #ff0000;
-      text-decoration: none;
-      font-size: 1.3em;
-      transition: color 0.3s;
-      text-shadow: 0 0 8px #ff0000;
+
+    function showAccountSection() {
+      document.getElementById('account-section').style.display = 'block';
+      document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
+      document.getElementById('loading-screen').style.display = 'none';
     }
-    .job-section a:hover {
-      color: #cc0000;
+
+    function createAccount() {
+      const username = document.getElementById('username-input').value.trim();
+      const password = document.getElementById('password-input').value.trim();
+      if (username && password) {
+        if (!username.match(/^[a-zA-Z0-9_]+$/)) {
+          alert('Username can only contain letters, numbers, and underscores.');
+          return;
+        }
+        const users = JSON.parse(localStorage.getItem('users') || '{}');
+        if (users[username]) {
+          alert('Username already taken, fam.');
+          return;
+        }
+        users[username] = { password, purchased: false };
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('currentUser', username);
+        document.getElementById('user-info').textContent = `Logged in as ${username}`;
+        document.getElementById('account-section').style.display = 'none';
+        loadPage('cards');
+      } else {
+        alert('Enter a username and password, fam.');
+      }
     }
-  </style>
-</head>
-<body>
-  <div id="captcha-screen">
-    <h2>Verify Access</h2>
-    <p>What is 9 + 4?</p>
-    <input type="text" id="captcha-input">
-    <button onclick="verifyCaptcha()">Submit</button>
-  </div>
 
-  <div id="loading-screen">
-    <div class="stick-figure"></div>
-    <p>RakRunnin Loading...</p>
-  </div>
+    function login() {
+      const username = document.getElementById('username-input').value.trim();
+      const password = document.getElementById('password-input').value.trim();
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      if (users[username] && users[username].password === password) {
+        localStorage.setItem('currentUser', username);
+        document.getElementById('user-info').textContent = `Logged in as ${username}`;
+        document.getElementById('account-section').style.display = 'none';
+        loadPage('cards');
+      } else {
+        alert('Wrong username or password, fam.');
+      }
+    }
 
-  <div class="container">
-    <div class="sidebar">
-      <h3>Available Drops</h3>
-      <ul id="sidebar-menu">
-        <li onclick="loadPage('cards')">Credit Cards</li>
-        <li onclick="loadPage('accounts')">Store Accounts</li>
-        <li onclick="loadPage('malware')">Malware</li>
-        <li onclick="loadPage('fullz')">Fullz</li>
-      </ul>
-    </div>
-    <div class="main-content" id="main-content">
-      <div class="header">
-        <h1>RakRunnin Card Shop</h1>
-        <p>Premium Cards, Accounts, Malware & Fullz - Cash App Only - DM @RakRunnin on Telegram</p>
-      </div>
+    function logout() {
+      localStorage.removeItem('currentUser');
+      document.getElementById('user-info').textContent = '';
+      showAccountSection();
+    }
 
-      <div class="navbar">
-        <button onclick="filterItems('all', 'cardContainer', 'cards')">All Cards</button>
-        <button onclick="filterItems('Visa', 'cardContainer', 'cards')">Visa</button>
-        <button onclick="filterItems('MasterCard', 'cardContainer', 'cards')">MasterCard</button>
-        <button onclick="filterItems('Discover', 'cardContainer', 'cards')">Discover</button>
-        <button onclick="filterItems('Amex', 'cardContainer', 'cards')">Amex</button>
-        <button onclick="sortItems('cardContainer')">Sort by Price</button>
-      </div>
-
-      <div class="search-bar">
-        <input type="text" placeholder="Search drops..." oninput="searchItems(this.value)">
-      </div>
-
-      <div class="section" id="cards-section">
-        <h2>Credit Cards</h2>
-        <div class="item-container" id="cardContainer"></div>
-      </div>
-
-      <div class="section" id="accounts-section" style="display: none;">
-        <h2>Store Accounts & Gift Cards</h2>
-        <div class="item-container" id="accountContainer"></div>
-      </div>
-
-      <div class="section" id="malware-section" style="display: none;">
-        <h2>Malware</h2>
-        <div class="item-container" id="malwareContainer"></div>
-      </div>
-
-      <div class="section" id="fullz-section" style="display: none;">
-        <h2>Fullz</h2>
-        <div class="item-container" id="fullzContainer"></div>
-      </div>
-
-      <div class="job-section">
-        <h2>Stack Cash Fast?</h2>
-        <p>Join @RakRunnin on Telegram for exclusive drops and methods!</p>
-        <a href="https://t.me/rakrunning">DM @RakRunnin</a>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const usernames = ['JayHustle88', 'MikeStacks', 'TeeMoney21', 'RonnieRuns', 'KevCashout', 'ShadowPlug', 'SwipeBoss', 'RichieBandz', 'NateNoLimit', 'DripVibes'];
-    const cardData = [
-      { type: 'Visa', bin: '414720', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d6/Visa_2021.svg', use: 'Shop online or cash out at ATMs. Clean bins, high limits.', reviews: [
-        { rating: 5, comment: '[Confirmed Purchase] These bins got me a new whip, no cap 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Hit Amazon for $2k, smooth as hell 💪', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Took a min to cash out but it worked', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4.5, comment: '[Confirmed Purchase] Got a laptop and some drip, fire 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Clean for online stores, no issues', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]},
-      { type: 'MasterCard', bin: '555555', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg', use: 'Perfect for subscriptions or big purchases. Easy cashout.', reviews: [
-        { rating: 4.5, comment: '[Confirmed Purchase] I keep buyin ccs, my og thinks it’s prop money 😭', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Solid for PayPal, no issues', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3, comment: '[Confirmed Purchase] Balance was lower than expected but still good', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 5, comment: '[Confirmed Purchase] Copped a TV and PS5, too easy 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Worked for subscriptions, clean', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]},
-      { type: 'Discover', bin: '601111', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/57/Discover_Card_logo.svg', use: 'Great for online stores. Low suspicion, high success.', reviews: [
-        { rating: 4, comment: '[Confirmed Purchase] Got a TV from Best Buy, no cap 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Worked online, took some tries', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 5, comment: '[Confirmed Purchase] Bought hella electronics, straight fire 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4.5, comment: '[Confirmed Purchase] Smooth for Walmart, no questions', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Got some tech, legit vibes', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]},
-      { type: 'Amex', bin: '378282', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg', use: 'Luxury purchases or high-value cashouts. Elite bins.', reviews: [
-        { rating: 5, comment: '[Confirmed Purchase] Copped Gucci bags, shit was too easy 💪', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4.5, comment: '[Confirmed Purchase] Fire for hotels, no questions asked', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Good for high-end stores, clean', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 5, comment: '[Confirmed Purchase] Bought luxury watches, no cap 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Took a bit but worked for boutiques', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]},
-      { type: 'Chase', bin: '426684', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Chase_Bank_logo.svg', use: 'Premium bank card for cashouts. High success rate.', soldOut: true, reviews: [
-        { rating: 4, comment: '[Confirmed Purchase] Cash App worked smooth, got my bread', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Took a sec to cash out but it hit', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4.5, comment: '[Confirmed Purchase] Clean for ATMs, no issues', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Got some stacks, worth it', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]}
-    ];
-    const accountData = [
-      { type: 'Saks Account', bin: 'SAKS', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Saks_Fifth_Avenue_logo.svg', use: 'Buy luxury goods at Saks. Up to $2,000 balance.', reviews: [
-        { rating: 4.5, comment: '[Confirmed Purchase] Copped some designer drip, no issues 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Account worked, balance was $1,500', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Took a bit to login but worth it', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 5, comment: '[Confirmed Purchase] Got Prada bags, too smooth 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Clean for luxury, fast delivery', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]},
-      { type: 'Nordstrom Gift Card', bin: 'NORD', logo: 'https://upload.wikimedia.org/wikipedia/commons/0/06/Nordstrom_Logo.svg', use: 'Shop fashion at Nordstrom. Redeem online or in-store.', reviews: [
-        { rating: 5, comment: '[Confirmed Purchase] Got shoes and clothes, straight cashout 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Worked online, in-store was tricky', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Smooth for online orders, fast delivery', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4.5, comment: '[Confirmed Purchase] Copped some drip, no cap 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Got jackets, clean', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]},
-      { type: 'Walmart Gift Card', bin: 'WAL', logo: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/Walmart_logo.svg', use: 'Purchase electronics or groceries at Walmart. Easy to use.', reviews: [
-        { rating: 4, comment: '[Confirmed Purchase] Bought a PS5, no cap, shit was smooth', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3, comment: '[Confirmed Purchase] Balance was $500, expected more', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4.5, comment: '[Confirmed Purchase] Got a laptop, quick and easy 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 5, comment: '[Confirmed Purchase] Copped TVs and tech, too good 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Worked for groceries, no issues', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]},
-      { type: 'Macy’s Account', bin: 'MACY', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5b/Macy%27s_Logo.svg', use: 'Shop at Macy’s for clothes and home goods. High balance.', soldOut: true, reviews: [
-        { rating: 4.5, comment: '[Confirmed Purchase] Got a whole fit for the low, love it 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Worked online, quick delivery', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Took a bit but got my order', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Clean for home goods, no cap', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]}
-    ];
-    const malwareData = [
-      { type: 'Stealth Keylogger', bin: 'KEY', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Capture passwords and bank logins silently. Easy setup.', reviews: [
-        { rating: 4.5, comment: '[Confirmed Purchase] Got PayPal logins in a day, too easy 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Worked on Windows, no issues', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 5, comment: '[Confirmed Purchase] Stole bank creds, straight fire 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Took some setup but worth it', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]},
-      { type: 'Trojan X', bin: 'TROJ', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Remote access and data theft. Plug-and-play.', soldOut: true, reviews: [
-        { rating: 5, comment: '[Confirmed Purchase] Controlled PCs like a boss, worth every penny 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Setup was tricky but it hit', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Got some good data, clean', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4.5, comment: '[Confirmed Purchase] Fire for remote access, no cap', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]},
-      { type: 'RAT Z', bin: 'RATZ', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Steal files and control devices remotely. High success.', reviews: [
-        { rating: 4, comment: '[Confirmed Purchase] Got bank details quick, no cap 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4.5, comment: '[Confirmed Purchase] Fire for data theft, easy to use', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 5, comment: '[Confirmed Purchase] Controlled a whole network, too good 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3, comment: '[Confirmed Purchase] Worked but needed tweaks', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]}
-    ];
-    const fullzData = [
-      { type: 'Fullz - John Doe', bin: 'FULL1', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Open bank accounts or apply for loans. Clean data.', reviews: [
-        { rating: 5, comment: '[Confirmed Purchase] Got a loan approved, shit was too smooth 💪', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Worked for credit apps, no issues', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4.5, comment: '[Confirmed Purchase] Clean for bank accounts, fire 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Took some tries but got it', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]},
-      { type: 'Fullz - Jane Smith', bin: 'FULL2', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Use for credit applications or online purchases. High success.', reviews: [
-        { rating: 4.5, comment: '[Confirmed Purchase] Opened a bank account, clean data 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Took some tries but worked', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 5, comment: '[Confirmed Purchase] Got a credit line, no cap 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Smooth for apps, legit vibes', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]},
-      { type: 'Fullz - Mike Brown', bin: 'FULL3', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Perfect for high-value applications. Verified data.', soldOut: true, reviews: [
-        { rating: 4, comment: '[Confirmed Purchase] Got a credit card issued, no cap 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4.5, comment: '[Confirmed Purchase] Smooth for loan apps, worth it', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Took a bit but worked', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 5, comment: '[Confirmed Purchase] Clean for high-value apps, fire 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] }
-      ]}
-    ];
+    function addComment(item, reviewsId) {
+      const commentInput = document.getElementById(`comment-input-${reviewsId}`);
+      const comment = commentInput.value.trim();
+      if (!comment) return;
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      const username = localStorage.getItem('currentUser');
+      if (!username || !users[username].purchased) {
+        alert('Gotta make a confirmed purchase to comment, fam.');
+        return;
+      }
+      item.reviews.push({ rating: 0, comment, username });
+      commentInput.value = '';
+      displayItems('all', getContainerId(item.cardType), item.category);
+    }
 
     function generateItem(category) {
       const data = category === 'cards' ? cardData : category === 'accounts' ? accountData : category === 'malware' ? malwareData : fullzData;
@@ -519,10 +500,10 @@
       const expiryMonth = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
       const expiryYear = String(Math.floor(Math.random() * 10) + 24);
       const cvv = category === 'cards' ? String(Math.floor(Math.random() * 1000)).padStart(3, '0') : '';
-      const price = Math.floor(Math.random() * 76 + 25); // Prices from $25 to $100
-      const soldOut = item.soldOut || Math.random() < 0.2; // 20% chance of being sold out unless specified
+      const price = Math.floor(Math.random() * 76 + 25);
+      const soldOut = item.soldOut || Math.random() < 0.2;
       const selectedReviews = [];
-      const reviewCount = Math.floor(Math.random() * 2) + 4; // 4-5 reviews
+      const reviewCount = Math.floor(Math.random() * 2) + 4;
       for (let i = 0; i < reviewCount; i++) {
         const review = item.reviews[Math.floor(Math.random() * item.reviews.length)];
         selectedReviews.push({ ...review, username: usernames[Math.floor(Math.random() * usernames.length)] });
@@ -536,37 +517,57 @@
         price,
         use: item.use,
         soldOut,
-        reviews: selectedReviews
+        reviews: selectedReviews,
+        category
       };
+    }
+
+    function getContainerId(cardType) {
+      if (cardData.some(c => c.type === cardType)) return 'cardContainer';
+      if (accountData.some(c => c.type === cardType)) return 'accountContainer';
+      if (malwareData.some(c => c.type === cardType)) return 'malwareContainer';
+      return 'fullzContainer';
     }
 
     function displayItems(filter = 'all', containerId = 'cardContainer', category = 'cards') {
       const container = document.getElementById(containerId);
       container.innerHTML = '';
-      const items = Array(1000).fill().map(() => generateItem(category)); // Thousands of items
+      const items = Array(1000).fill().map(() => generateItem(category));
       let filteredItems = items;
       if (filter !== 'all') {
         filteredItems = items.filter(item => item.cardType === filter);
       }
-      filteredItems.slice(0, 50).forEach(item => addItem(item, container, category)); // Display 50 for performance
+      filteredItems.slice(0, 50).forEach(item => addItem(item, container));
       updateSidebar();
     }
 
-    function addItem(item, container, category) {
+    function addItem(item, container) {
+      const reviewsId = `reviews-${item.cardType}-${item.cardNumber.replace(/-/g, '')}`;
       const itemDiv = document.createElement('div');
       itemDiv.className = 'item';
-      const reviewsId = `reviews-${item.cardType}-${item.cardNumber.replace(/-/g, '')}`;
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      const currentUser = localStorage.getItem('currentUser');
+      const canComment = currentUser && users[currentUser]?.purchased;
       itemDiv.innerHTML = `
         ${item.logo && !item.soldOut ? `<img src="${item.logo}" alt="${item.cardType}">` : '<p class="sold-out">SOLD OUT</p>'}
         <h3>${item.cardType} - $${item.price * 50}</h3>
         <p>Price: $${item.price}</p>
-        <p>${category === 'cards' ? `Card Number: ${item.cardNumber.slice(0, 5)}XXXX-XXXX-XXXX` : `ID: ${item.cardNumber}`}</p>
+        <p>${item.category === 'cards' ? `Card Number: ${item.cardNumber.slice(0, 5)}XXXX-XXXX-XXXX` : `ID: ${item.cardNumber}`}</p>
         ${item.expiry ? `<p>Expiry: ${item.expiry} | CVV: ***</p>` : ''}
         <p>${item.use}</p>
         <p class="stars">${'★'.repeat(Math.floor(item.reviews[0].rating))}${item.reviews[0].rating % 1 ? '☆' : ''} ${item.reviews[0].rating}/5</p>
         <button class="reviews-btn" onclick="toggleReviews('${reviewsId}')">See Reviews</button>
         <div class="reviews-container" id="${reviewsId}">
-          ${item.reviews.map(review => `<p class="comment"><span class="username">${review.username}</span>: ${review.comment}</p>`).join('')}
+          ${item.reviews.map(review => `
+            <p class="comment">
+              <span class="username">${review.username}</span>
+              <span class="confirmed-badge">Confirmed Purchase</span>: ${review.comment}
+            </p>
+          `).join('')}
+          ${canComment ? `
+            <input type="text" class="comment-input" id="comment-input-${reviewsId}" placeholder="Drop a comment...">
+            <button class="comment-btn" onclick="addComment(${JSON.stringify(item)}, '${reviewsId}')">Post Comment</button>
+          ` : ''}
         </div>
         <button class="buy-btn" ${item.soldOut ? 'disabled' : ''} onclick="buyItem('${item.cardType} - ${item.cardNumber}')">${item.soldOut ? 'Sold Out' : 'Contact to Purchase'}</button>
       `;
@@ -580,14 +581,8 @@
 
     function updateSidebar() {
       const sidebarMenu = document.getElementById('sidebar-menu');
-      const categories = [
-        { name: 'Credit Cards', id: 'cards', container: 'cardContainer' },
-        { name: 'Store Accounts', id: 'accounts', container: 'accountContainer' },
-        { name: 'Malware', id: 'malware', container: 'malwareContainer' },
-        { name: 'Fullz', id: 'fullz', container: 'fullzContainer' }
-      ];
       sidebarMenu.innerHTML = '';
-      categories.forEach(category => {
+      menuData.forEach(category => {
         const types = (category.id === 'cards' ? cardData : category.id === 'accounts' ? accountData : category.id === 'malware' ? malwareData : fullzData)
           .map(item => item.type);
         types.forEach(type => {
@@ -597,9 +592,8 @@
           li.textContent = `${type} (${count} available)`;
           li.className = count === 0 ? 'sold-out' : '';
           li.onclick = count > 0 ? () => filterItems(type, category.container, category.id) : null;
-          sidebarMenu.appendChild(li);
-        });
-      });
+idge to the sidebar menu
+      sidebarMenu.innerHTML += '<li onclick="showAccountSection()">Account</li>';
     }
 
     function searchItems(query) {
@@ -625,7 +619,7 @@
       items.sort((a, b) => {
         const priceA = parseInt(a.querySelector('p:nth-child(3)').textContent.split('$')[1]);
         const priceB = parseInt(b.querySelector('p:nth-child(3)').textContent.split('$')[1]);
-        return priceA - priceB;
+        return priceA小学英语课程表 - priceB;
       });
       container.innerHTML = '';
       items.forEach(item => container.appendChild(item));
@@ -633,6 +627,15 @@
     }
 
     function buyItem(item) {
+      const username = localStorage.getItem('currentUser');
+      if (!username) {
+        alert('Log in to purchase, fam.');
+        showAccountSection();
+        return;
+      }
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      users[username].purchased = true;
+      localStorage.setItem('users', JSON.stringify(users));
       window.location.href = 'https://t.me/rakrunning';
     }
 
@@ -655,6 +658,13 @@
       const input = document.getElementById('captcha-input').value;
       if (input === '13') {
         document.getElementById('captcha-screen').style.display = 'none';
+        const username = localStorage.getItem('currentUser');
+        if (username) {
+          document.getElementById('user-info').textContent = `Logged in as ${username}`;
+          loadPage('cards');
+        } else {
+          showAccountSection();
+        }
       } else {
         alert('Wrong answer, fam. Try again.');
       }
