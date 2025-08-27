@@ -29,30 +29,31 @@
     }
     #captcha-screen h2 {
       color: #ff0000;
-      text-shadow: 0 0 5px #ff0000;
-      font-size: 2em;
+      text-shadow: 0 0 8px #ff0000;
+      font-size: 2.5em;
     }
     #captcha-screen input {
-      padding: 10px;
-      margin: 10px 0;
+      padding: 12px;
+      margin: 15px 0;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       background: #1a1a1a;
       color: #ffcccc;
-      font-size: 1em;
+      font-size: 1.1em;
     }
     #captcha-screen button {
-      background: #ff0000;
+      background: linear-gradient(to right, #ff0000, #cc0000);
       color: #fff;
-      padding: 10px 20px;
+      padding: 12px 24px;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 1em;
-      transition: background 0.3s;
+      font-size: 1.1em;
+      transition: background 0.3s, transform 0.3s;
     }
     #captcha-screen button:hover {
-      background: #cc0000;
+      background: linear-gradient(to right, #cc0000, #ff0000);
+      transform: scale(1.05);
     }
     #loading-screen {
       position: fixed;
@@ -67,21 +68,21 @@
       justify-content: center;
       align-items: center;
       color: #ff0000;
-      font-size: 1.5em;
+      font-size: 2em;
+      text-shadow: 0 0 8px #ff0000;
     }
     #loading-screen p {
-      margin: 10px 0;
-      text-shadow: 0 0 5px #ff0000;
+      margin: 15px 0;
     }
     .stick-figure {
-      width: 150px;
-      height: 150px;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="20" r="10" fill="%23ff0000"/><line x1="50" y1="30" x2="50" y2="60" stroke="%23ff0000" stroke-width="5"/><line x1="50" y1="40" x2="30" y2="50" stroke="%23ff0000" stroke-width="5"/><line x1="50" y1="40" x2="70" y2="50" stroke="%23ff0000" stroke-width="5"/><line x1="50" y1="60" x2="40" y2="80" stroke="%23ff0000" stroke-width="5"/><line x1="50" y1="60" x2="60" y2="80" stroke="%23ff0000" stroke-width="5"/><circle cx="80" cy="20" r="12" fill="%23ffd700"/><text x="80" y="25" fill="%23ff0000" font-size="20">$</text></svg>') no-repeat center;
+      width: 200px;
+      height: 200px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="20" r="12" fill="%23ff0000"/><line x1="50" y1="32" x2="50" y2="65" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="40" x2="30" y2="50" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="40" x2="70" y2="50" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="65" x2="40" y2="85" stroke="%23ff0000" stroke-width="6"/><line x1="50" y1="65" x2="60" y2="85" stroke="%23ff0000" stroke-width="6"/><rect x="75" y="10" width="20" height="25" fill="%23ffd700" rx="5"/><text x="82.5" y="27" fill="%23ff0000" font-size="18">$</text></svg>') no-repeat center;
       animation: chase 1.5s infinite;
     }
     @keyframes chase {
       0% { transform: translateX(0); }
-      50% { transform: translateX(40px); }
+      50% { transform: translateX(50px); }
       100% { transform: translateX(0); }
     }
     .container {
@@ -89,81 +90,85 @@
       min-height: 100vh;
     }
     .sidebar {
-      width: 250px;
+      width: 300px;
       background: #1a1a1a;
-      padding: 20px;
+      padding: 25px;
       position: fixed;
       height: 100%;
       overflow-y: auto;
       scrollbar-width: thin;
       scrollbar-color: #ff0000 #1a1a1a;
-      box-shadow: 2px 0 10px rgba(255, 0, 0, 0.3);
+      box-shadow: 3px 0 12px rgba(255, 0, 0, 0.4);
     }
     .sidebar h3 {
       color: #ff0000;
-      font-size: 1.5em;
-      margin: 10px 0;
-      text-shadow: 0 0 5px #ff0000;
+      font-size: 1.8em;
+      margin: 15px 0;
+      text-shadow: 0 0 8px #ff0000;
     }
     .sidebar ul {
       list-style: none;
       padding: 0;
     }
     .sidebar li {
-      margin: 15px 0;
+      margin: 20px 0;
       color: #ffcccc;
-      font-size: 1em;
+      font-size: 1.2em;
       cursor: pointer;
       transition: color 0.3s, transform 0.3s;
+      padding: 10px;
+      border-radius: 5px;
     }
     .sidebar li:hover {
       color: #ff0000;
-      transform: translateX(5px);
+      transform: translateX(10px);
+      background: #2a2a2a;
     }
     .sidebar .sold-out {
       color: #666;
       cursor: default;
+      background: none;
     }
     .main-content {
-      margin-left: 270px;
-      padding: 20px;
-      width: calc(100% - 270px);
+      margin-left: 320px;
+      padding: 30px;
+      width: calc(100% - 320px);
     }
     .header {
       background: #1a1a1a;
-      padding: 20px;
+      padding: 25px;
       text-align: center;
-      box-shadow: 0 2px 10px rgba(255, 0, 0, 0.3);
+      box-shadow: 0 3px 12px rgba(255, 0, 0, 0.4);
     }
     .header h1 {
       margin: 0;
-      font-size: 2.8em;
+      font-size: 3em;
       color: #ff0000;
-      text-shadow: 0 0 10px #ff0000;
+      text-shadow: 0 0 12px #ff0000;
     }
     .header p {
-      font-size: 1.3em;
-      margin: 10px 0;
+      font-size: 1.5em;
+      margin: 15px 0;
       color: #cc0000;
-      text-shadow: 0 0 5px #cc0000;
+      text-shadow: 0 0 8px #cc0000;
     }
     .navbar {
       background: #1a1a1a;
-      padding: 10px;
+      padding: 15px;
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 25px;
       flex-wrap: wrap;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.6);
     }
     .navbar button {
       background: linear-gradient(to right, #ff0000, #cc0000);
       color: #fff;
       border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
+      padding: 12px 24px;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 1em;
+      font-size: 1.1em;
       transition: background 0.3s, transform 0.3s;
       text-shadow: 0 0 5px #000;
     }
@@ -172,107 +177,131 @@
       transform: scale(1.05);
     }
     .search-bar {
-      margin: 15px auto;
-      max-width: 500px;
+      margin: 20px auto;
+      max-width: 600px;
     }
     .search-bar input {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       background: #1a1a1a;
       color: #ffcccc;
-      font-size: 1em;
-      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+      font-size: 1.1em;
+      box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.5);
     }
     .section {
-      margin: 20px 0;
-      animation: fadeIn 1s ease-in-out;
+      margin: 30px 0;
+      animation: fadeIn 1.2s ease-in-out;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
     .section h2 {
       color: #ff0000;
-      font-size: 2em;
+      font-size: 2.2em;
       text-align: center;
       text-shadow: 0 0 10px #ff0000;
     }
     .item-container {
       display: flex;
       flex-direction: column;
-      gap: 20px;
-      padding: 20px;
-      max-height: 600px;
+      gap: 25px;
+      padding: 25px;
+      max-height: 800px;
       overflow-y: auto;
       scrollbar-width: thin;
       scrollbar-color: #ff0000 #1a1a1a;
     }
     .item {
       background: #1a1a1a;
-      padding: 20px;
-      border-radius: 10px;
+      padding: 25px;
+      border-radius: 12px;
       transition: transform 0.3s, box-shadow 0.3s;
-      box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
-      max-width: 800px;
+      box-shadow: 0 6px 18px rgba(255, 0, 0, 0.4);
+      max-width: 900px;
       margin: 0 auto;
     }
     .item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(255, 0, 0, 0.5);
+      transform: translateY(-8px) rotate(0.5deg);
+      box-shadow: 0 12px 24px rgba(255, 0, 0, 0.6);
     }
     .item img {
-      width: 200px;
+      width: 250px;
       height: auto;
-      border-radius: 5px;
-      margin-bottom: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
       transition: transform 0.3s;
     }
     .item img:hover {
-      transform: scale(1.1);
+      transform: scale(1.15);
     }
     .item h3 {
-      margin: 10px 0;
+      margin: 15px 0;
       color: #ff0000;
-      font-size: 1.5em;
-      text-shadow: 0 0 5px #ff0000;
+      font-size: 1.8em;
+      text-shadow: 0 0 8px #ff0000;
     }
     .item p {
-      margin: 5px 0;
-      font-size: 1em;
+      margin: 8px 0;
+      font-size: 1.1em;
       color: #cc0000;
     }
     .item .sold-out {
       color: #666;
       font-weight: bold;
-      font-size: 1.2em;
+      font-size: 1.3em;
     }
     .item .stars {
       color: #ffd700;
-      font-size: 1em;
-      margin: 10px 0;
+      font-size: 1.2em;
+      margin: 15px 0;
     }
     .item .comment {
       font-style: italic;
       color: #ffcccc;
       background: #2a2a2a;
-      padding: 10px;
-      border-radius: 5px;
+      padding: 12px;
+      border-radius: 6px;
       margin: 10px 0;
+      font-size: 1em;
     }
     .item .username {
       color: #ff0000;
       font-weight: bold;
     }
-    .buy-btn {
+    .reviews-btn {
       background: linear-gradient(to right, #ff0000, #cc0000);
       color: #fff;
       padding: 10px 20px;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
       font-size: 1em;
+      margin: 10px 0;
+      transition: background 0.3s, transform 0.3s;
+      text-shadow: 0 0 5px #000;
+    }
+    .reviews-btn:hover {
+      background: linear-gradient(to right, #cc0000, #ff0000);
+      transform: scale(1.05);
+    }
+    .reviews-container {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      background: #2a2a2a;
+      border-radius: 6px;
+    }
+    .buy-btn {
+      background: linear-gradient(to right, #ff0000, #cc0000);
+      color: #fff;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1em;
       transition: background 0.3s, transform 0.3s;
       text-shadow: 0 0 5px #000;
     }
@@ -286,19 +315,19 @@
     }
     .job-section {
       background: #1a1a1a;
-      padding: 20px;
-      border-radius: 10px;
-      margin: 20px auto;
-      max-width: 600px;
+      padding: 25px;
+      border-radius: 12px;
+      margin: 30px auto;
+      max-width: 700px;
       text-align: center;
-      box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+      box-shadow: 0 6px 18px rgba(255, 0, 0, 0.4);
     }
     .job-section a {
       color: #ff0000;
       text-decoration: none;
-      font-size: 1.2em;
+      font-size: 1.3em;
       transition: color 0.3s;
-      text-shadow: 0 0 5px #ff0000;
+      text-shadow: 0 0 8px #ff0000;
     }
     .job-section a:hover {
       color: #cc0000;
@@ -376,80 +405,110 @@
   </div>
 
   <script>
-    const usernames = ['TrapKing420', 'MoneyMitch', 'HustleGod', 'StreetRunner', 'CashoutKev', 'DarkPoolz', 'SwipeLord', 'GetRichRick', 'NoCapNate', 'DripDemon'];
+    const usernames = ['JayHustle88', 'MikeStacks', 'TeeMoney21', 'RonnieRuns', 'KevCashout', 'ShadowPlug', 'SwipeBoss', 'RichieBandz', 'NateNoLimit', 'DripVibes'];
     const cardData = [
       { type: 'Visa', bin: '414720', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d6/Visa_2021.svg', use: 'Shop online or cash out at ATMs. Clean bins, high limits.', reviews: [
         { rating: 5, comment: '[Confirmed Purchase] These bins got me a new whip, no cap 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
         { rating: 4, comment: '[Confirmed Purchase] Hit Amazon for $2k, smooth as hell 💪', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Took a min to cash out but it worked', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 3.5, comment: '[Confirmed Purchase] Took a min to cash out but it worked', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4.5, comment: '[Confirmed Purchase] Got a laptop and some drip, fire 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4, comment: '[Confirmed Purchase] Clean for online stores, no issues', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]},
       { type: 'MasterCard', bin: '555555', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg', use: 'Perfect for subscriptions or big purchases. Easy cashout.', reviews: [
-        { rating: 4.5, comment: '[Confirmed Purchase] I keep buyin ccs I’m telling my og I got prop money 😭', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4.5, comment: '[Confirmed Purchase] I keep buyin ccs, my og thinks it’s prop money 😭', username: usernames[Math.floor(Math.random() * usernames.length)] },
         { rating: 4, comment: '[Confirmed Purchase] Solid for PayPal, no issues', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3, comment: '[Confirmed Purchase] Balance was lower than expected but still good', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 3, comment: '[Confirmed Purchase] Balance was lower than expected but still good', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 5, comment: '[Confirmed Purchase] Copped a TV and PS5, too easy 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4, comment: '[Confirmed Purchase] Worked for subscriptions, clean', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]},
       { type: 'Discover', bin: '601111', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/57/Discover_Card_logo.svg', use: 'Great for online stores. Low suspicion, high success.', reviews: [
         { rating: 4, comment: '[Confirmed Purchase] Got a TV from Best Buy, no cap 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
         { rating: 3.5, comment: '[Confirmed Purchase] Worked online, took some tries', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 5, comment: '[Confirmed Purchase] Bought hella electronics, straight fire 💯', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 5, comment: '[Confirmed Purchase] Bought hella electronics, straight fire 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4.5, comment: '[Confirmed Purchase] Smooth for Walmart, no questions', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4, comment: '[Confirmed Purchase] Got some tech, legit vibes', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]},
       { type: 'Amex', bin: '378282', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg', use: 'Luxury purchases or high-value cashouts. Elite bins.', reviews: [
         { rating: 5, comment: '[Confirmed Purchase] Copped Gucci bags, shit was too easy 💪', username: usernames[Math.floor(Math.random() * usernames.length)] },
         { rating: 4.5, comment: '[Confirmed Purchase] Fire for hotels, no questions asked', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Good for high-end stores, clean', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 4, comment: '[Confirmed Purchase] Good for high-end stores, clean', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 5, comment: '[Confirmed Purchase] Bought luxury watches, no cap 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 3.5, comment: '[Confirmed Purchase] Took a bit but worked for boutiques', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]},
       { type: 'Chase', bin: '426684', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Chase_Bank_logo.svg', use: 'Premium bank card for cashouts. High success rate.', soldOut: true, reviews: [
         { rating: 4, comment: '[Confirmed Purchase] Cash App worked smooth, got my bread', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Took a sec to cash out but it hit', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 3.5, comment: '[Confirmed Purchase] Took a sec to cash out but it hit', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4.5, comment: '[Confirmed Purchase] Clean for ATMs, no issues', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4, comment: '[Confirmed Purchase] Got some stacks, worth it', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]}
     ];
     const accountData = [
       { type: 'Saks Account', bin: 'SAKS', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Saks_Fifth_Avenue_logo.svg', use: 'Buy luxury goods at Saks. Up to $2,000 balance.', reviews: [
         { rating: 4.5, comment: '[Confirmed Purchase] Copped some designer drip, no issues 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
         { rating: 4, comment: '[Confirmed Purchase] Account worked, balance was $1,500', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Took a bit to login but worth it', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 3.5, comment: '[Confirmed Purchase] Took a bit to login but worth it', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 5, comment: '[Confirmed Purchase] Got Prada bags, too smooth 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4, comment: '[Confirmed Purchase] Clean for luxury, fast delivery', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]},
       { type: 'Nordstrom Gift Card', bin: 'NORD', logo: 'https://upload.wikimedia.org/wikipedia/commons/0/06/Nordstrom_Logo.svg', use: 'Shop fashion at Nordstrom. Redeem online or in-store.', reviews: [
         { rating: 5, comment: '[Confirmed Purchase] Got shoes and clothes, straight cashout 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
         { rating: 3.5, comment: '[Confirmed Purchase] Worked online, in-store was tricky', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Smooth for online orders, fast delivery', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 4, comment: '[Confirmed Purchase] Smooth for online orders, fast delivery', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4.5, comment: '[Confirmed Purchase] Copped some drip, no cap 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4, comment: '[Confirmed Purchase] Got jackets, clean', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]},
       { type: 'Walmart Gift Card', bin: 'WAL', logo: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/Walmart_logo.svg', use: 'Purchase electronics or groceries at Walmart. Easy to use.', reviews: [
         { rating: 4, comment: '[Confirmed Purchase] Bought a PS5, no cap, shit was smooth', username: usernames[Math.floor(Math.random() * usernames.length)] },
         { rating: 3, comment: '[Confirmed Purchase] Balance was $500, expected more', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4.5, comment: '[Confirmed Purchase] Got a laptop, quick and easy 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 4.5, comment: '[Confirmed Purchase] Got a laptop, quick and easy 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 5, comment: '[Confirmed Purchase] Copped TVs and tech, too good 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4, comment: '[Confirmed Purchase] Worked for groceries, no issues', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]},
       { type: 'Macy’s Account', bin: 'MACY', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5b/Macy%27s_Logo.svg', use: 'Shop at Macy’s for clothes and home goods. High balance.', soldOut: true, reviews: [
         { rating: 4.5, comment: '[Confirmed Purchase] Got a whole fit for the low, love it 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Worked online, quick delivery', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 4, comment: '[Confirmed Purchase] Worked online, quick delivery', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 3.5, comment: '[Confirmed Purchase] Took a bit but got my order', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4, comment: '[Confirmed Purchase] Clean for home goods, no cap', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]}
     ];
     const malwareData = [
       { type: 'Stealth Keylogger', bin: 'KEY', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Capture passwords and bank logins silently. Easy setup.', reviews: [
         { rating: 4.5, comment: '[Confirmed Purchase] Got PayPal logins in a day, too easy 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Worked on Windows, no issues', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 4, comment: '[Confirmed Purchase] Worked on Windows, no issues', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 5, comment: '[Confirmed Purchase] Stole bank creds, straight fire 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 3.5, comment: '[Confirmed Purchase] Took some setup but worth it', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]},
       { type: 'Trojan X', bin: 'TROJ', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Remote access and data theft. Plug-and-play.', soldOut: true, reviews: [
         { rating: 5, comment: '[Confirmed Purchase] Controlled PCs like a boss, worth every penny 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Setup was tricky but it hit', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 3.5, comment: '[Confirmed Purchase] Setup was tricky but it hit', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4, comment: '[Confirmed Purchase] Got some good data, clean', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4.5, comment: '[Confirmed Purchase] Fire for remote access, no cap', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]},
       { type: 'RAT Z', bin: 'RATZ', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Steal files and control devices remotely. High success.', reviews: [
         { rating: 4, comment: '[Confirmed Purchase] Got bank details quick, no cap 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4.5, comment: '[Confirmed Purchase] Fire for data theft, easy to use', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 4.5, comment: '[Confirmed Purchase] Fire for data theft, easy to use', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 5, comment: '[Confirmed Purchase] Controlled a whole network, too good 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 3, comment: '[Confirmed Purchase] Worked but needed tweaks', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]}
     ];
     const fullzData = [
       { type: 'Fullz - John Doe', bin: 'FULL1', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Open bank accounts or apply for loans. Clean data.', reviews: [
         { rating: 5, comment: '[Confirmed Purchase] Got a loan approved, shit was too smooth 💪', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4, comment: '[Confirmed Purchase] Worked for credit apps, no issues', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 4, comment: '[Confirmed Purchase] Worked for credit apps, no issues', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4.5, comment: '[Confirmed Purchase] Clean for bank accounts, fire 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 3.5, comment: '[Confirmed Purchase] Took some tries but got it', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]},
       { type: 'Fullz - Jane Smith', bin: 'FULL2', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Use for credit applications or online purchases. High success.', reviews: [
         { rating: 4.5, comment: '[Confirmed Purchase] Opened a bank account, clean data 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 3.5, comment: '[Confirmed Purchase] Took some tries but worked', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 3.5, comment: '[Confirmed Purchase] Took some tries but worked', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 5, comment: '[Confirmed Purchase] Got a credit line, no cap 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 4, comment: '[Confirmed Purchase] Smooth for apps, legit vibes', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]},
       { type: 'Fullz - Mike Brown', bin: 'FULL3', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Black_skull.svg', use: 'Perfect for high-value applications. Verified data.', soldOut: true, reviews: [
         { rating: 4, comment: '[Confirmed Purchase] Got a credit card issued, no cap 💯', username: usernames[Math.floor(Math.random() * usernames.length)] },
-        { rating: 4.5, comment: '[Confirmed Purchase] Smooth for loan apps, worth it', username: usernames[Math.floor(Math.random() * usernames.length)] }
+        { rating: 4.5, comment: '[Confirmed Purchase] Smooth for loan apps, worth it', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 3.5, comment: '[Confirmed Purchase] Took a bit but worked', username: usernames[Math.floor(Math.random() * usernames.length)] },
+        { rating: 5, comment: '[Confirmed Purchase] Clean for high-value apps, fire 🔥', username: usernames[Math.floor(Math.random() * usernames.length)] }
       ]}
     ];
 
@@ -462,7 +521,12 @@
       const cvv = category === 'cards' ? String(Math.floor(Math.random() * 1000)).padStart(3, '0') : '';
       const price = Math.floor(Math.random() * 76 + 25); // Prices from $25 to $100
       const soldOut = item.soldOut || Math.random() < 0.2; // 20% chance of being sold out unless specified
-      const review = item.reviews[Math.floor(Math.random() * item.reviews.length)];
+      const selectedReviews = [];
+      const reviewCount = Math.floor(Math.random() * 2) + 4; // 4-5 reviews
+      for (let i = 0; i < reviewCount; i++) {
+        const review = item.reviews[Math.floor(Math.random() * item.reviews.length)];
+        selectedReviews.push({ ...review, username: usernames[Math.floor(Math.random() * usernames.length)] });
+      }
       return {
         cardNumber: cardNumber.match(/.{1,4}/g)?.join('-') || cardNumber,
         expiry: category === 'cards' ? `${expiryMonth}/${expiryYear}` : '',
@@ -472,9 +536,7 @@
         price,
         use: item.use,
         soldOut,
-        rating: review.rating,
-        comment: review.comment,
-        username: review.username
+        reviews: selectedReviews
       };
     }
 
@@ -493,6 +555,7 @@
     function addItem(item, container, category) {
       const itemDiv = document.createElement('div');
       itemDiv.className = 'item';
+      const reviewsId = `reviews-${item.cardType}-${item.cardNumber.replace(/-/g, '')}`;
       itemDiv.innerHTML = `
         ${item.logo && !item.soldOut ? `<img src="${item.logo}" alt="${item.cardType}">` : '<p class="sold-out">SOLD OUT</p>'}
         <h3>${item.cardType} - $${item.price * 50}</h3>
@@ -500,11 +563,19 @@
         <p>${category === 'cards' ? `Card Number: ${item.cardNumber.slice(0, 5)}XXXX-XXXX-XXXX` : `ID: ${item.cardNumber}`}</p>
         ${item.expiry ? `<p>Expiry: ${item.expiry} | CVV: ***</p>` : ''}
         <p>${item.use}</p>
-        <p class="stars">${'★'.repeat(Math.floor(item.rating))}${item.rating % 1 ? '☆' : ''} ${item.rating}/5</p>
-        <p class="comment"><span class="username">${item.username}</span>: ${item.comment}</p>
+        <p class="stars">${'★'.repeat(Math.floor(item.reviews[0].rating))}${item.reviews[0].rating % 1 ? '☆' : ''} ${item.reviews[0].rating}/5</p>
+        <button class="reviews-btn" onclick="toggleReviews('${reviewsId}')">See Reviews</button>
+        <div class="reviews-container" id="${reviewsId}">
+          ${item.reviews.map(review => `<p class="comment"><span class="username">${review.username}</span>: ${review.comment}</p>`).join('')}
+        </div>
         <button class="buy-btn" ${item.soldOut ? 'disabled' : ''} onclick="buyItem('${item.cardType} - ${item.cardNumber}')">${item.soldOut ? 'Sold Out' : 'Contact to Purchase'}</button>
       `;
       container.appendChild(itemDiv);
+    }
+
+    function toggleReviews(reviewsId) {
+      const reviewsContainer = document.getElementById(reviewsId);
+      reviewsContainer.style.display = reviewsContainer.style.display === 'block' ? 'none' : 'block';
     }
 
     function updateSidebar() {
